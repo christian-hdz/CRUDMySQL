@@ -62,7 +62,25 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     }
 
+    @Override
+    public int getItemCount() {
+        return productList.size();
+    }
 
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+
+        TextView textViewCodigo1, textViewDescripcion1, textViewPrecio1;
+        ImageView imageView;
+
+        public ProductViewHolder(View itemView) {
+            super(itemView);
+
+            textViewCodigo1 = itemView.findViewById(R.id.textViewCodigo1);
+            textViewDescripcion1 = itemView.findViewById(R.id.textViewDescripcion1);
+            textViewPrecio1= itemView.findViewById(R.id.textViewPrecio1);
+            imageView = itemView.findViewById(R.id.imageView);
+        }
+    }
 
 
 }
