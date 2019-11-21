@@ -123,5 +123,35 @@ public class Consulta_RecyclerView extends AppCompatActivity {
                 Toast.makeText(Consulta_RecyclerView.this, "Error. Compruebe su acceso a Internet.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        //Volley.newRequestQueue(this).add(stringRequest);
+        // MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(Consulta_RecyclerView.this).addToRequestQueue(stringRequest);
     }
+
+
+    private void DialogConfirmacion(){
+        //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        String mensaje = "¿Realmente desea salir?";
+        dialogo = new AlertDialog.Builder(Consulta_RecyclerView.this);
+        dialogo.setIcon(R.drawable.ic_close);
+        dialogo.setTitle("Advertencia");
+        dialogo.setMessage(mensaje);
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo, int id) {
+                /*Intent intent = new Intent(DashboardLuces.this, luces_control_sms.class);
+                startActivity(intent);*/
+                //MainActivity.this.finishAffinity();
+                finish();
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo, int id) {
+                Toast.makeText(getApplicationContext(), "Operación Cancelada.", Toast.LENGTH_LONG).show();
+            }
+        });
+        dialogo.show();
+    }
+
 }
