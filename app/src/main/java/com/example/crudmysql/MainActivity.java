@@ -1,18 +1,70 @@
 package com.example.crudmysql;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText et_codigo, et_descripcion, et_precio;
+    private Button btn_guardar, btn_consultaCodigo, btn_consultaDescripcion, btn_eliminar, btn_actualizar;
+
+    boolean inputEt=false;
+    boolean inputEd=false;
+    boolean input1=false;
+    int resultadoInsert=0;
+    final Context context = this;
+
+    String senal = "";
+    String codigo = "";
+    String descripcion = "";
+    String precio = "";
+
+    MantenimientoMySQL manto = new MantenimientoMySQL();
+    Dto datos = new Dto();
+
+    //Banderas para saber estados de métodos del CRUD.
+    boolean estadoGuarda = false;
+    boolean estadoEliminar = false;
+
+    AlertDialog.Builder dialogo;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            new android.app.AlertDialog.Builder(this)
+                    .setIcon(R.drawable.ic_close)
+                    .setTitle("Advertencia")
+                    .setMessage("¿Realmente desea salir?")
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
+                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            MainActivity.this.finishAffinity();
+                        }
+                    })
+                    .show();
+            return true;
+        }
+        //para las demas cosas, se reenvia el evento al listener habitual
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
